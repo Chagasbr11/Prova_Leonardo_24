@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tabela de Filmes</title>
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+</style>
+</head>
+<body>
+
+<h2>Tabela de Filmes</h2>
+
+<table id="tabela-filmes">
+  <thead>
+    <tr>
+      <th>Título</th>
+      <th>Ano</th>
+      <th>Locado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Filme A</td>
+      <td>2019</td>
+      <td id="filme-a-status">Não</td>
+    </tr>
+    <tr>
+      <td>Filme B</td>
+      <td>2020</td>
+      <td id="filme-b-status">Sim</td>
+    </tr>
+    <tr>
+      <td>Filme C</td>
+      <td>2021</td>
+      <td id="filme-c-status">Não</td>
+    </tr>
+  </tbody>
+</table>
+
+<script>
+  // Função para pintar as linhas da tabela de acordo com o status de locação
+  function pintarLinhasTabela() {
+    const linhas = document.querySelectorAll("#tabela-filmes tbody tr");
+
+    linhas.forEach(linha => {
+      const statusLocacao = linha.querySelector("td:nth-child(3)").textContent.trim().toLowerCase();
+
+      if (statusLocacao === "sim") {
+        linha.style.backgroundColor = "red"; // Filme locado
+      } else if (statusLocacao === "não") {
+        linha.style.backgroundColor = "green"; // Filme não locado
+      }
+    });
+  }
+
+  // Chamada da função ao carregar a página
+  window.addEventListener("load", pintarLinhasTabela);
+</script>
+
+</body>
+</html>
