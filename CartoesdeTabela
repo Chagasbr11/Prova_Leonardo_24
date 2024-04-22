@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locadora de Filmes</title>
+    <style>
+        /* Estilos opcionais para tornar a página mais atraente */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .card {
+            display: inline-block;
+            border: 1px solid #dddddd;
+            padding: 10px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Tabela de Locações Realizadas</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Filme</th>
+            <th>Cliente</th>
+            <th>Data de Locação</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Aqui você pode adicionar as linhas da sua tabela -->
+        <tr>
+            <td>Filme 1</td>
+            <td>Cliente 1</td>
+            <td>2024-04-22</td>
+        </tr>
+        <tr>
+            <td>Filme 2</td>
+            <td>Cliente 2</td>
+            <td>2024-04-21</td>
+        </tr>
+        <!-- Adicione mais linhas conforme necessário -->
+    </tbody>
+</table>
+
+<div class="card">
+    <h3>Filmes Locados</h3>
+    <p>Total: <span id="filmes-locados">2</span></p>
+</div>
+
+<div class="card">
+    <h3>Filmes no Estoque</h3>
+    <p>Total: <span id="filmes-estoque">8</span></p>
+</div>
+
+<!-- JavaScript para atualizar os totais -->
+<script>
+    // Supondo que você tenha variáveis ou funções para obter os totais de filmes locados e no estoque
+    var filmesLocados = 2; // Substitua isso pelo total real de filmes locados
+    var filmesEstoque = 8; // Substitua isso pelo total real de filmes no estoque
+
+    // Atualiza os totais exibidos nos cartões
+    document.getElementById('filmes-locados').textContent = filmesLocados;
+    document.getElementById('filmes-estoque').textContent = filmesEstoque;
+</script>
+
+</body>
+</html>
