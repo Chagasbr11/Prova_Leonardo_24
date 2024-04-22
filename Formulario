@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locadora de Filmes</title>
+    <style>
+        /* Estilos opcionais para tornar a página mais atraente */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Tabela de Locações Realizadas</h2>
+<table id="tabela-locacoes">
+    <thead>
+        <tr>
+            <th>Filme</th>
+            <th>Cliente</th>
+            <th>Data de Locação</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- As linhas serão adicionadas aqui via JavaScript -->
+    </tbody>
+</table>
+
+<form id="form-locacao">
+    <label for="nome-cliente">Nome do Cliente:</label>
+    <input type="text" id="nome-cliente" name="nome-cliente" required><br><br>
+    <label for="filme-locado">Filme Locado:</label>
+    <input type="text" id="filme-locado" name="filme-locado" required><br><br>
+    <button type="submit">Adicionar Locação</button>
+</form>
+
+<!-- JavaScript para lidar com o envio do formulário e atualizar a tabela -->
+<script>
+    // Função para adicionar uma nova locação à tabela
+    function adicionarLocacao(nomeCliente, filmeLocado) {
+        var tabelaLocacoes = document.getElementById('tabela-locacoes').getElementsByTagName('tbody')[0];
+        var dataAtual = new Date().toLocaleDateString(); // Obtém a data atual no formato dd/mm/aaaa
+        var newRow = tabelaLocacoes.insertRow();
+
+        // Adiciona células com os dados da nova locação
+        newRow.insertCell(0).appendChild(document.createTextNode(filmeLocado));
+        newRow.insertCell(1).appendChild(document.createTextNode(nomeCliente));
+        newRow.insertCell(2).appendChild(document.createTextNode(dataAtual));
+    }
+
+    // Event listener para o envio do formulário
+    document.getElementById('form-locacao').addEventListener('submit', function(event) {
+        event.preventDefault(); // Impede o envio padrão do formulário
+
+        // Obtém os valores dos campos do formulário
+        var nomeCliente = document.getElementById('nome-cliente').value;
+        var filmeLocado = document.getElementById('filme-locado').value;
+
+        // Adiciona a nova locação à tabela
+        adicionarLocacao(nomeCliente, filmeLocado);
+
+        // Limpa os campos do formulário após o envio
+        document.getElementById('nome-cliente').value = '';
+        document.getElementById('filme-locado').value = '';
+    });
+</script>
+
+</body>
+</html>
