@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devolução de Filmes</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Lista de Filmes Locados</h2>
+
+<table id="filmes-locados">
+    <thead>
+        <tr>
+            <th>Título do Filme</th>
+            <th>Data de Locação</th>
+            <th>Data de Devolução</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Filme 1</td>
+            <td>20/04/2024</td>
+            <td>27/04/2024</td>
+            <td><button onclick="devolverFilme(1)">Devolver</button></td>
+        </tr>
+        <tr>
+            <td>Filme 2</td>
+            <td>21/04/2024</td>
+            <td>28/04/2024</td>
+            <td><button onclick="devolverFilme(2)">Devolver</button></td>
+        </tr>
+        <!-- Adicione mais linhas conforme necessário -->
+    </tbody>
+</table>
+
+<h2>Lista de Filmes Disponíveis</h2>
+
+<table id="filmes-disponiveis">
+    <thead>
+        <tr>
+            <th>Título do Filme</th>
+            <th>Quantidade Disponível</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Filme 1</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>Filme 2</td>
+            <td>12</td>
+        </tr>
+        <!-- Adicione mais linhas conforme necessário -->
+    </tbody>
+</table>
+
+<script>
+    function devolverFilme(id) {
+        // Aqui você colocaria a lógica para enviar uma requisição ao backend
+        // informando que o filme com o ID 'id' foi devolvido. O backend
+        // então atualizaria os dados necessários no banco de dados.
+
+        // Exemplo de requisição AJAX usando fetch:
+        fetch(`/devolver-filme?id=${id}`, {
+            method: 'POST',
+        })
+        .then(response => {
+            if (response.ok) {
+                // Aqui você pode atualizar a tabela ou mostrar uma mensagem de sucesso
+                console.log(`Filme com ID ${id} devolvido com sucesso.`);
+                atualizarTabelaFilmesLocados(id);
+                atualizarTabelaFilmesDisponiveis(id);
+            } else {
+                console.error('Erro ao devolver filme.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao devolver filme:', error);
+        });
+    }
+
+    function atualizarTabelaFilmesLocados(id) {
+        // Aqui você atualizaria a tabela de filmes locados, removendo a linha
+        // correspondente ao filme devolvido.
+        const tabelaFilmesLocados = document.getElementById('filmes-locados');
+        const linhaRemover = tabelaFilmesLocados.querySelector(`tr[data-id="${id}"]`);
+        if (linhaRemover) {
+            linhaRemover.remove();
+        }
+    }
+
+    function atualizarTabelaFilmesDisponiveis(id) {
+        // Aqui você atualizaria a tabela de filmes disponíveis, incrementando
+        // a quantidade disponível do filme devolvido.
+        const tabelaFilmesDisponiveis = document.getElementById('filmes-disponiveis');
+        const linhaAtualizar = tabelaFilmesDisponiveis.querySelector(`tr[data-id="${id}"]`);
+        if (linhaAtualizar) {
+            const quantidadeAtual = parseInt(linhaAtualizar.querySelector('td:last-child').textContent);
+            linhaAtualizar.querySelector('td:last-child').textContent = quantidadeAtual + 1;
+        }
+    }
+
+    function atualizarDataDevolucao(id) {
+        const hoje = new Date();
+        const dd = String(hoje.getDate()).padStart(2, '0');
+        const mm = String(hoje.getMonth() + 1).padStart(2, '0'); // January is 0!
+        const yyyy = hoje.getFullYear();
+        const dataAtual = dd + '/' + mm + '/' + yyyy;
+
+        const tabelaFilmesLocados = document.getElementById('filmes-locados');
+        const linhaAtualizar = tabelaFilmesLocados.querySelector(`tr[data-id="${id}"]`);
+        if (linhaAtualizar) {
+            linhaAtualizar.querySelector('td:nth-child(3)').textContent = dataAtual;
+        }
+    }
+
+    // Chamando a função para atualizar a data de devolução no carregamento da página
+    // Isso garante que a data seja atualizada mesmo que o usuário não clique no botão "Devolver"
+    document.addEventListener('DOMContentLoaded', function() {
+        const idsFilmesLocados = document.querySelectorAll('#filmes-locados tr[data-id]');
+        idsFilmesLocados.forEach(item => {
+            const id = parseInt(item.getAttribute('data-id'));
+            atualizarDataDevolucao(id);
+        });
+    });
+</script>
+
+</body>
+</html>
